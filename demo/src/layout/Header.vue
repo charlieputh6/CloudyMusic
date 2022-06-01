@@ -9,7 +9,7 @@
     <!-- 前进后退 -->
     <div class="operation">
       <span @click="goBack"><i class="el-icon-arrow-left" style="width:10px"></i> </span>
-      <span @click="goforward"><i class="el-icon-arrow-right"></i> </span>
+      <span @click="goForward"><i class="el-icon-arrow-right"></i> </span>
     </div>
     <!-- 搜索框 -->
     <div>
@@ -56,7 +56,27 @@ import Login from '../components/login/Login.vue';
 import ThemePicker from '../components/ThemePicker.vue';
 export default {
     name: "Header",
-    components: { Login, ThemePicker }
+    data(){
+      return {
+        state:"21e",
+      }
+    },
+    components: { Login, ThemePicker },
+    methods:{
+      goBack(){
+
+      },
+      goForward(){
+
+      },
+      handleSelect(){
+
+      },
+      handleIconClick(){
+
+      },
+      querySearch(){}
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -87,7 +107,8 @@ export default {
       justify-content: space-around;
       color: #fff;
       span {
-			display: block;
+			display: flex;
+      justify-content: center;
 			width: 30px;
 			height: 30px;
 			text-align: center;

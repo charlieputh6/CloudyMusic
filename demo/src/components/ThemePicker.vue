@@ -40,31 +40,15 @@ export default {
 					themeColor: "#e2ab12",
 				},
 			],
-			currentIndex: this.getItem("currentThemeIndex") ? this.getItem("currentThemeIndex") : 0,
+			currentIndex:  0,
 		};
 	},
 	created() {
-		// 设置主题色
-		let currentTheme = this.getItem("currentTheme") ? this.getItem("currentTheme") : null;
-		if (currentTheme != null) {
-			for (let k in currentTheme) {
-				if (k != "title") {
-					document.documentElement.style.setProperty(`--${k}`, currentTheme[k]);
-				}
-			}
-		}
+
 	},
 	methods: {
 		changeTheme(item, index) {
-			for (let k in item) {
-				if (k !== "title") {
-					document.documentElement.style.setProperty(`--${k}`, item[k]);
-				}
-			}
-			this.currentIndex = index;
-			this.setItem("currentTheme", item);
-			this.setItem("currentThemeIndex", index);
-		},
+    }
 	},
 };
 </script>
