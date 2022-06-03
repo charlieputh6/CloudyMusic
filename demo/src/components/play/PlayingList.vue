@@ -1,10 +1,12 @@
 <template>
-  <div class="playing-list" v-if="activeItem===0">
+  <div class="playing-list" >
       <!-- 顶部导航 -->
       <div class="top-nav">
         <TabBar  :tabitems="tabitems" @tabItemClick="tabItemCLick"/>
       </div>
-      <!-- 总的信息 共多少首 -->
+<!-- 播放列表 -->
+      <div class="play-list"  v-if="activeItem===0">
+          <!-- 总的信息 共多少首 -->
       <div class="hd">
         <h4 style="padding:0 10px">当前列表总共{{playingList.length}}首歌曲</h4>
         <span @click="deleteAll"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu"></use></svg>清空</span>
@@ -84,6 +86,92 @@
   </template>
 
       </div>
+      </div>
+
+<!-- 历史记录 -->
+      <div class="history-list"  v-if="activeItem===1">
+          <!-- 总的信息 共多少首 -->
+      <div class="hd">
+        <h4 style="padding:0 10px">当前列表总共{{historyPlay.length}}首歌曲</h4>
+        <span @click="deleteAllHistory"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-shanchu"></use></svg>清空</span>
+      </div>
+      <!-- 主体  歌曲列表 -->
+      <div class="bd">
+      <template>
+        <el-table
+          :show-header="false"
+          :data="historyPlay"
+          style="width: 100%"
+          :row-class-name="tableRowClassName"
+          empty-text="列表暂无歌曲"
+          stripe
+          @row-dblclick="playHistorySong"
+          >
+          <el-table-column width="50">
+            <!-- 放置小喇叭还是序号 -->
+            <template v-slot="scope">
+            <!-- 是正在播放还是静音 -->
+            <!-- 当前歌曲是小喇叭 -->
+              <div v-if="scope.row.id === nowSongDetail.id">
+                  <span v-if="isPlaying">
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-laba"></use></svg>
+                  </span>
+                  <span v-else>
+                    <svg class="icon" aria-hidden="true"><use xlink:href="#icon-shengyinguanbi"></use></svg>
+                  </span>
+                </div>
+                <!-- 不是的话就是序号 -->
+              <span v-else>{{scope.row.index | formatIndex}}</span>
+            </template>
+
+
+          </el-table-column>
+
+          <el-table-column
+          prop="name"
+          label="歌曲"
+          :show-overflow-tooltip="true"
+          width="100">
+          </el-table-column>
+          <!-- 到时候可以发请求通过歌手id查找歌手姓名 -->
+          <el-table-column el-table-column
+          prop=""
+          label="歌手姓名"
+          :show-overflow-tooltip="true"
+          width="100">
+          <template v-slot="scope">
+            <span @click="toSinger(scope.row.id)" >charlieputh</span>
+          </template>
+          </el-table-column>
+
+          <el-table-column el-table-column
+          prop="play_time"
+          label="歌曲时长"
+          :show-overflow-tooltip="true"
+          width="100">
+          <template v-slot="scope">
+                <span>
+                  {{ scope.row.play_time | formatDuration }}
+                </span>
+              </template>
+          </el-table-column>
+
+          <el-table-column width="60">
+              <template v-slot="scope">
+                <span @click="deleteHistory(scope.row)">
+                <svg class="icon" aria-hidden="true"><use xlink:href="#icon-guanbi"></use></svg>
+                </span>
+              </template>
+            </el-table-column>
+
+
+        </el-table>
+
+  </template>
+
+      </div>
+      </div>
+
     </div>
 </template>
 
