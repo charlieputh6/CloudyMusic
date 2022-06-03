@@ -27,7 +27,7 @@
           </svg>
         </span>
         <!-- 播放 暂停 -->
-        <span class="play-box" v-if="isplay"  @click="playMusic">
+        <span class="play-box" v-if="!isPlaying"  @click="playMusic">
           <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-bofang"></use>
           </svg>
@@ -51,10 +51,12 @@
             <audio
             autoplay
             :controls="true"
-            :src="this.songDetail.src"
+            :src="nowSongDetail.src"
             ref="audioplay"
             :disabled="this.playingList.length == 0"
             @ended="playModel == 3 ? loopPlay() : toggleSong(1)"
+            @play="changeState(true)"
+            @pause="changeState(false)"
             >你的浏览器版本太低，暂不支持</audio>
             <div class="coverIt"></div>
           </div>
@@ -104,7 +106,7 @@
 
     <!-- 当前播放列表 -->
     <transition name="playlist">
-      <PlayingList v-if="isShowDrawer" @closePlayList="isShowDrawer = false"/>
+      <PlayingList v-if="isShowDrawer" @closePlayList="isShowDrawer = false" @toPlaySong="toPlaySong"/>
     </transition>
   </div>
 
@@ -112,11 +114,22 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import PlayingList from '../components/play/PlayingList.vue';
 export default {
+   computed:{
+    ...mapGetters([
+      "isLogin",
+      // "userInfo",
+      "songUrl",
+      "isPlaying",
+      "playingList",
+      "nowSongDetail",
+    ])
+  },
     data() {
         return {
-            isplay: true,
+            // isplay: true,
             playModel: 1,
             nowIndex: 0,
             isShowDrawer: false,
@@ -128,7 +141,7 @@ export default {
                 src: "",
                 play_time: 0
             },
-            playingList: [
+            playingLists: [
                 {
                     id: 436514312,
                     name: "成都",
@@ -152,7 +165,7 @@ export default {
                     cover: "http://p1.music.126.net/BJgUd9aD9gpougZFASRTTw==/18548761162235571.jpg ",
                     src: "http://music.163.com/song/media/outer/url?id=447926063.mp3",
                     play_time: 329
-                },
+                }
             ],
             voiceValue: 50,
             nowVolume: 50,
@@ -162,18 +175,17 @@ export default {
     },
     mounted() {
         this.updateSongs();
+        // 死数据先在这里将播放列表全部加入playingList里面
+        this.$store.dispatch("addAllSong", this.playingLists);
+        // 保存歌曲URL
+        this.$store.dispatch("saveSongUrl",this.nowSongDetail.src)
+        // 保存当前正在播放歌曲的详细信息
+        this.$store.dispatch("saveSongDetail",this.nowSongDetail)
     },
     methods: {
         // 更新歌曲
         updateSongs() {
-            // console.log(this.playingList[this.song_index].id);
-            // console.log(this.songDetail.id);
-            this.songDetail.id = this.playingList[this.nowIndex].id;
-            this.songDetail.name = this.playingList[this.nowIndex].name;
-            this.songDetail.singer_id = this.playingList[this.nowIndex].singer_id;
-            this.songDetail.cover = this.playingList[this.nowIndex].cover;
-            this.songDetail.src = this.playingList[this.nowIndex].src;
-            this.songDetail.play_time = this.playingList[this.nowIndex].play_time;
+            this.$store.dispatch("saveSongDetail",this.playingLists[this.nowIndex]);
         },
         // 切歌
         toggleSong(type) {
@@ -220,9 +232,12 @@ export default {
             }
             else {
                 this.$refs.audioplay.play();
-                this.isplay = !this.isplay;
             }
         },
+        // 播放或者暂停 就到vuex改变当前播放状态
+	    	changeState(isPlay) {
+			    this.$store.dispatch("changePlayState", isPlay);
+		    },
         // 顺序模式
         orderPlay(type) {
             let toggleIndex;
@@ -239,7 +254,7 @@ export default {
                     toggleIndex = type === 0 ? this.nowIndex - 1 : this.nowIndex + 1;
                     break;
             }
-            this.songDetail = this.playingList[toggleIndex];
+            this.$store.dispatch("saveSongDetail",this.playingList[toggleIndex]);
             this.nowIndex = toggleIndex;
         },
         // 循环播放
@@ -255,7 +270,7 @@ export default {
             // 获取一个随机索引号
             let radomIndex = Math.floor(Math.random() * (this.playingList.length - 1 - 0 + 1));
             // 根据索引号拿到随机歌曲
-            this.songDetail = this.playingList[radomIndex];
+            this.$store.dispatch("saveSongDetail",this.playingList[radomIndex]);
             this.nowIndex = radomIndex;
         },
         // 切换播放模式
@@ -267,7 +282,6 @@ export default {
         // 暂停
         pauseMusic() {
             this.$refs.audioplay.pause();
-            this.isplay = !this.isplay;
         },
         // 拖动音量进度条
         changeVoiceProgress(len) {
@@ -285,9 +299,14 @@ export default {
         cancelMute() {
             this.voiceValue = this.nowVolume;
             this.$refs.audioplay.volume = this.voiceValue / 100;
-        }
+        },
+        // playingList组件传过来的双击事件
+        toPlaySong(){
+          this.$refs.audioplay.play();
+        },
     },
-    components: { PlayingList }
+    components: { PlayingList },
+
 }
 </script>
 
