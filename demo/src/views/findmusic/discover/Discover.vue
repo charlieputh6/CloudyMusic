@@ -1,8 +1,7 @@
 <template>
-<div>
-  findMusic
-
-</div>
+  <div>
+    discover
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="playing-list" >
+  <div class="playing-list" id="playing-song-list">
       <!-- 顶部导航 -->
       <div class="top-nav">
         <TabBar  :tabitems="tabitems" @tabItemClick="tabItemCLick"/>
@@ -235,7 +235,7 @@ export default {
 			return;
 		},
     },
-     filters: {
+    filters: {
       formatIndex(index) {
         return index<10?'0'+index:index;
       },
@@ -247,6 +247,19 @@ export default {
           return m+" : "+s;
       }
   	},
+    mounted(){
+      // 点击其他区域(不包括下面和右边)就关闭播放列表
+		let playingList = document.querySelector("#playing-song-list");
+		let footer = document.querySelector("#footer");
+		document.addEventListener("mousedown", e => {
+      console.log(e);
+			if (playingList) {
+				if (!playingList.contains(e.target) && !footer.contains(e.target)) {
+					this.$emit("closePlayList");
+				}
+			}
+		});
+    }
 }
 </script>
 
