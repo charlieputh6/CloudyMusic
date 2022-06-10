@@ -7,7 +7,14 @@ Vue.use(Router)
 const Findmusic = () => import("../views/findmusic/FindMusic.vue");
 // 1.1 个性推荐
 const Discover = () => import("../views/findmusic/discover/Discover.vue");
-
+// 1.2 推荐歌单
+const Recsonglist = () => import("../views/findmusic/recsonglist/Recsonglist.vue");
+// 1.3 排行榜
+const Songrank = () => import("../views/findmusic/songrank/Songrank.vue");
+// 1.4 歌手
+const Singer = () => import("../views/findmusic/singer/Singer.vue");
+// 1.5 最新音乐
+const Newsongs = () => import("../views/findmusic/newsongs/Newsongs.vue");
 
 /* 2 推荐视频 */
 const Recvideo = () => import("../views/recvideo/RecVideo.vue");
@@ -37,7 +44,27 @@ export default new Router({
           name: "Discover",
           component: Discover,
         },
-      ]
+        {
+          path: "recsonglist",
+          name: "Recsonglist",
+          component: Recsonglist,
+        },
+        {
+          path: "songrank",
+          name: "Songrank",
+          component: Songrank,
+        },
+        {
+          path: "singer",
+          name: "Singer",
+          component: Singer,
+        },
+        {
+          path: "newsongs",
+          name: "Newsongs",
+          component: Newsongs,
+        },
+      ],
     },
     {
       path: "/recvideo",

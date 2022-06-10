@@ -28,14 +28,14 @@ const mutations = {
   },
 
   //添加单曲到当前播放列表
-  addPlayinglist(state, song) {
+  addPlayinglist(state, payload) {
     // 列表查找相同的歌曲
     let index = state.playingList.findIndex(item => {
-      return item.id == song.id;
+      return item.id == payload.id;
     });
     //如果列表不存在相同的歌曲 再添加到播放列表
     if (index == -1) {
-      state.playingList.unshift(song);
+      state.playingList.unshift(payload);
       localStorage.setItem("playingList", JSON.stringify(state.playingList));
     }
   },
