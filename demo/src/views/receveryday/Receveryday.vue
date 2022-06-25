@@ -20,7 +20,7 @@
     </div>
 
     <div class="bd">
-			<song-table :song="recsongs"/>
+			<song-table :songs="recsongs"/>
 		</div>
   </div>
   <div v-else>

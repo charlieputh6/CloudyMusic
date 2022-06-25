@@ -1,4 +1,11 @@
 const state = {
+
+
+  // 用户喜欢的音乐id列表
+  likeSongIds: localStorage.getItem("likeSongIds") ? JSON.parse(localStorage.getItem("likeSongIds")) : [],
+
+
+
   /*
   音乐播放
    */

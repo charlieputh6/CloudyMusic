@@ -1,4 +1,11 @@
 const actions = {
+
+
+  // 用户喜欢的音乐id列表
+  saveLikeSongIds({ commit }, payload) {
+    commit("saveLikeSongIds", payload);
+  },
+
   /* 音乐播放 */
   //改变播放状态
   changePlayState({ commit }, payload) {

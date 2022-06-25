@@ -1,4 +1,11 @@
 const mutations = {
+
+  // 用户喜欢的音乐id列表
+  saveLikeSongIds(state, payload) {
+    state.likeSongIds = payload;
+    localStorage.setItem("likeSongIds", JSON.stringify(state.likeSongIds));
+  },
+
   /*
   音乐播放
    */
