@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <Banner :banner="banner" /> -->
+    <Banner :banner="banner" />
   </div>
 </template>
 

@@ -46,5 +46,8 @@ export default {
 // 		width: 100%;
 // 	}
 // }
+.banner{
+  padding: 5px 60px;
+}
 
 </style>

@@ -26,6 +26,9 @@ const Receveryday = () => import("../views/receveryday/RecEveryDay.vue");
 /* 4 我的收藏 */
 const Myfavorite = () => import("../views/myfavorite/MyFavorite.vue");
 
+/* 5 我喜欢的音乐 */
+const Mylove = () => import("../views/mylove/MyLove.vue");
+
 export default new Router({
   mode: "hash",
   routes: [
@@ -80,6 +83,11 @@ export default new Router({
       path: "/myfavorite",
       component: Myfavorite,
       name: "Myfavorite",
+    },
+    {
+      path: "/mylove",
+      component: Mylove,
+      name: "Mylove",
     },
   ]
 })

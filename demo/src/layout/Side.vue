@@ -6,15 +6,18 @@
 			<img :src="item.icon" alt="" >
 				<span>{{ item.name }}</span>
 			</el-menu-item>
-			<!-- 登录后的 -->
-			<!-- <div class="mycreat" v-if="userSongList.length >= 1">
-				<p class="by">我创建的歌单</p>
-				<el-menu-item v-for="item in createdSongList" :key="item.id" :index="'/songlistdetail/' + item.id">
-					<span class="iconfont icon-xihuan"></span>
-					<span>{{ item.name }}</span>
-				</el-menu-item>
+
+      <el-divider></el-divider>
+			<div class="mycreat" v-if="true">
+				<h2>我创建的歌单</h2>
+				<span>
+          <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-aixin"></use>
+          </svg>
+        </span>
+				<span @click="myFavorite">我喜欢的音乐</span>
 			</div>
-			<div class="collect" v-if="userSongList.length > 1">
+			<!-- <div class="collect" v-if="userSongList.length > 1">
 				<p class="by">我收藏的歌单</p>
 				<div class="person">
 					<el-menu-item v-for="item in collectSongList" :key="item.id" :index="'/songlistdetail/' + item.id">
@@ -42,6 +45,11 @@ export default {
 			collectIndex: null,
 		};
 	},
+  methods:{
+    myFavorite(){
+      this.$router.push("/mylove");
+    }
+  }
 }
 </script>
 
@@ -52,6 +60,7 @@ export default {
 	overflow-y: scroll;
 	border-right: 1px solid #dddddd;
 	padding-top: 2px;
+  font-size: 16px;
 	.el-menu {
 		border-right: 0;
     img{
@@ -70,7 +79,28 @@ export default {
 		background: rgb(245, 245, 245, 0.3) !important;
 	}
 	}
+  .mycreat{
+    padding: 0 20px;
 
+    h2{
+      padding-bottom: 20px;
+      font-size: 16px;
+    }
+    span{
+      &:hover{
+      cursor: pointer;
+    }
+    }
+
+  }
+
+}
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 
 </style>
