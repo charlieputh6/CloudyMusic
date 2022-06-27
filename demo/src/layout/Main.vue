@@ -13,34 +13,45 @@
        <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop> -->
     </div>
 
+    <!-- 当前歌曲详情 -->
+    <transition name="songdetail">
+      <playing-song-detail v-show="isShowSongDetail"></playing-song-detail>
+
+    </transition>
 
   </div>
 
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import PlayingSongDetail from '../components/play/PlayingSongDetail.vue';
 export default {
-    data(){
+  computed:{
+    ...mapGetters(["nowSongDetail", "isShowSongDetail"])
+  },
+  data() {
       return {
-        isRouterAlive:true,
-      }
-    },
-    provide(){
+          isRouterAlive: true,
+      };
+  },
+  provide() {
       return {
-		  	reload: this.reload,
-		  }
-    },
-    methods:{
+          reload: this.reload,
+      };
+  },
+  methods: {
       // methods里面加入一个刷新的方法 最后，需要把这个函数 provide 出去
       // 这样，app.vue上就设置完了 那么当我们需要刷新的时候，在需要的页面上加上这个函数就可以了
       // 首先注入这个函数 然后在需要用到这个函数的地方去引用就行了
       reload() {
-			  this.isRouterAlive = false;
-		  	this.$nextTick(function () {
-				this.isRouterAlive = true;
-			});
-		},
-    }
+          this.isRouterAlive = false;
+          this.$nextTick(function () {
+              this.isRouterAlive = true;
+          });
+      },
+  },
+  components: { PlayingSongDetail }
 }
 </script>
 

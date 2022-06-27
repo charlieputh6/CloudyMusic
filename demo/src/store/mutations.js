@@ -19,6 +19,11 @@ const mutations = {
     state.songUrl = payload;
   },
 
+  //是否显示当前播放歌曲详情页
+  showSongDetail(state) {
+    state.isShowSongDetail = !state.isShowSongDetail;
+  },
+
   // 保存当前播放歌曲详情,并且添加当前播放歌曲到播放历史记录
   saveSongDetail(state, payload) {
     state.nowSongDetail = payload;
