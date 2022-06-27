@@ -53,7 +53,13 @@
           </div>
         </div>
       </div>
-
+      <div class="comment">
+        <!-- 输入框 -->
+        <div class="textinput">
+          <el-input ref="commentContent" type="textarea" rows="3" maxlength="100" show-word-limit  placeholder="说点什么呗"> </el-input>
+          <el-button round type="primary" size="small" icon="el-icon-position" class="el-btn" >发送评论</el-button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -78,7 +84,7 @@ export default {
     this.toformatlyric();
   },
   mounted(){
-    console.log(this.formatlyric);
+    // console.log(this.formatlyric);
     //监听播放时间
     let musicDom = document.querySelector('#audio');//获取Audio的DOM节点
     //使用事件监听方式捕捉事件  这里只能写箭头函数  因为作用域的问题
@@ -267,6 +273,16 @@ export default {
           }
         }
       }
+    }
+    .comment{
+      margin: 15px auto;
+			width: 70%;
+      .textinput {
+      text-align: right;
+      .el-btn {
+        margin-top: 10px;
+      }
+}
     }
   }
 }

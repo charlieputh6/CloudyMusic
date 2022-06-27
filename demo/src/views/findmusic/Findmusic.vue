@@ -47,5 +47,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.music-content {
+	overflow-y: scroll;
+  // 为啥要设置这高度才行？
+  height: 100vh + 10px;
+}
 </style>
