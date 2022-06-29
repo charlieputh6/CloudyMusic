@@ -2,7 +2,7 @@
 	<div class="theme">
 		<div class="theme-item" v-for="(item, index) in themeList" :key="index" @click="changeTheme(item, index)">
 			<div :style="{ background: item.themeColor }" class="bg">
-				<i class="el-icon-check" v-if="currentIndex === index"></i>
+				<i class="el-icon-check  right" v-if="currentIndex === index"></i>
 			</div>
 			<div>{{ item.title }}</div>
 		</div>
@@ -17,7 +17,7 @@ export default {
 			themeList: [
 				{
 					title: "蓝色",
-					mycompColor: "#5292fe",
+					themeColor: "#409eff",
 				},
 				{
 					title: "红色",
@@ -48,6 +48,13 @@ export default {
 	},
 	methods: {
 		changeTheme(item, index) {
+      for (let k in item) {
+				if (k !== "title") {
+          // 修改主题颜色
+					document.documentElement.style.setProperty(`--${k}`, item[k]);
+				}
+			}
+			this.currentIndex = index;
     }
 	},
 };
@@ -74,13 +81,15 @@ export default {
 		}
 	}
 }
-.icon-duihao {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: #fff;
-	font-size: 18px;
-	font-weight: 700;
+.right{
+  color: #fff;
+  font-size: 30px;
+}
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 </style>

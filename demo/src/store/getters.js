@@ -1,5 +1,6 @@
 // 用户信息
 export const isLogin = state => state.isLogin;
+export const userInfo = state => state.userInfo;
 
 // 用户喜欢的歌曲列表
 export const likeSongIds = state => state.likeSongIds;

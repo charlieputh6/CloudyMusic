@@ -1,5 +1,13 @@
 const actions = {
 
+  /* 更新登录状态 */
+  updateLogin({ commit }, payload) {
+    commit("updateLogin", payload);
+  },
+  /* 保存用户信息 */
+  saveUserInfo({ commit }, payload) {
+    commit("saveUserInfo", payload);
+  },
 
   // 用户喜欢的音乐id列表
   saveLikeSongIds({ commit }, payload) {

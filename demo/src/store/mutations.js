@@ -1,4 +1,12 @@
 const mutations = {
+  /* 更新登录状态 */
+  updateLogin(state, payload) {
+    state.isLogin = payload;
+  },
+  /* 保存用户信息 */
+  saveUserInfo(state, payload) {
+    state.userInfo = payload;
+  },
 
   // 用户喜欢的音乐id列表
   saveLikeSongIds(state, payload) {

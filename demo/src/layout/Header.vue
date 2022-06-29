@@ -14,39 +14,38 @@
     <!-- 搜索框 -->
     <div>
       <el-autocomplete
-  popper-class="my-autocomplete"
-  v-model="state"
-  :fetch-suggestions="querySearch"
-  placeholder="请输入内容"
-  @select="handleSelect">
-  <i
-    class="el-icon-edit el-input__icon"
-    slot="suffix"
-    @click="handleIconClick">
-  </i>
-  <template slot-scope="{ item }">
-    <div class="name">{{ item.value }}</div>
-    <span class="addr">{{ item.address }}</span>
-  </template>
-</el-autocomplete>
-    </div>
+        popper-class="my-autocomplete"
+        v-model="state"
+        :fetch-suggestions="querySearch"
+        placeholder="请输入内容"
+        @select="handleSelect">
+        <i
+          class="el-icon-edit el-input__icon"
+          slot="suffix"
+          @click="handleIconClick">
+        </i>
+        <template slot-scope="{ item }">
+          <div class="name">{{ item.value }}</div>
+          <span class="addr">{{ item.address }}</span>
+        </template>
+      </el-autocomplete>
     </div>
 
-<div class="right">
-<!-- 右侧登录 -->
-		<div class="login">
-			<div>
+  </div>
+
+  <div class="right">
+  <!-- 右侧登录 -->
+      <div class="login" >
         <Login/>
       </div>
-		</div>
-		<!-- 主题 -->
-		<div class="pifu">
-      <span><img src="../assets/img/pifu.png" alt=""></span>
-			<el-popover ref="popover" placement="bottom" width="150" trigger="click">
-        <ThemePicker/>
-			</el-popover>
-		</div>
-</div>
+      <!-- 主题 -->
+      <div class="pifu">
+        <span v-popover:popover slot="reference"><img src="../assets/img/pifu.png" alt=""></span>
+        <el-popover ref="popover" placement="bottom" width="150" trigger="hover">
+          <ThemePicker/>
+        </el-popover>
+      </div>
+  </div>
 
 </div>
 </template>
@@ -58,7 +57,7 @@ export default {
     name: "Header",
     data(){
       return {
-        state:"21e",
+        state:"搜索",
       }
     },
     components: { Login, ThemePicker },

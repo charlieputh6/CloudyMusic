@@ -1,5 +1,10 @@
 const state = {
 
+  // 是否登录
+  isLogin: localStorage.getItem("isLogin") ? JSON.parse(localStorage.getItem("isLogin")) : false,
+  // 用户信息 如果缓存中有就取出来，没有则为空
+  userInfo: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null,
+
 
   // 用户喜欢的音乐id列表
   likeSongIds: localStorage.getItem("likeSongIds") ? JSON.parse(localStorage.getItem("likeSongIds")) : [],

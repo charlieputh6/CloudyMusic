@@ -426,7 +426,7 @@ export default {
 	bottom: 0px;
 	height: 70px;
 	z-index: 999;
-	background: #f8f8ff;
+	background: #f1f3f4;
 	border-top: 1px solid #dddddd;
 }
 .player {
@@ -439,7 +439,6 @@ export default {
     height: 100%;
     display: flex;
     width: 15%;
-    background-color: skyblue;
     .cover-content{
       display: flex;
       align-items: center;
@@ -472,7 +471,6 @@ export default {
   .center-play-song{
     display: flex;
     flex: 1;
-    background-color: pink;
     margin-left: 40px;
     height: 100%;
     .change-play{
@@ -549,7 +547,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: yellow;
     font-size: 25px;
     span{
       margin: 0 10px;
