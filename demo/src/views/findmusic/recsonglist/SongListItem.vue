@@ -31,7 +31,9 @@
     </div>
     <!-- 歌单下的文字描述 -->
 		<div class="item-text">
-			<div>{{ songlistitem.listName }}</div>
+
+			<div v-if="songlistitem.listName">{{ songlistitem.listName}}</div>
+      <div v-else>{{songlistitem.albumName}}</div>
 		</div>
   </div>
 </template>
@@ -125,6 +127,7 @@ export default {
 	}
 	.item-text {
 		margin: 5px 0;
+    text-align: center;
 	}
 }
 .icon {

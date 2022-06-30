@@ -59,7 +59,17 @@ export default {
       const { data: res } = await this.$http.get("/list/getlist");
       // console.log(res);
       this.createdSongList = res.data;
+    },
+    reload(){
+      this.getlist();
     }
+  },
+  watch:{
+    $route(to, from) {
+			if (to !== from) {
+				this.reload();
+			}
+		},
   }
 }
 </script>

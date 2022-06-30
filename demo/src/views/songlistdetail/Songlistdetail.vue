@@ -1,7 +1,7 @@
 <template>
   <div id="song-list-detail">
     <!-- 歌单描述 -->
-    <Topdesc :playlist="playlist"></Topdesc>
+    <Topdesc :playlist="playlist" @playAllSong="playAllSong"></Topdesc>
     <!-- 底部歌单 -->
     <div class="song-list">
       <el-tabs>
@@ -61,6 +61,7 @@ export default {
       playlist: {}, //歌单描述信息
 			songids: "", //歌单中所有歌曲id
 			songs: [], //歌单中所有歌曲详细信息
+      new_songs:[]
     }
   },
   created(){
@@ -86,7 +87,25 @@ export default {
       this.playlist.cover = res1.cover;
       // 存储歌单所有的歌单详细信息
       this.songs = res1.musicList;
-    }
+    },
+    // 播放全部歌曲事件
+		async playAllSong() {
+      console.log(this.songs);
+			// this.$store.dispatch("addAllSong", this.songs);
+			// 默认播放第一首歌
+      for(let i=0;i<this.songs.length;i++){
+        const { data: res } = await this.$http.get("/music/getmusic", {params: { musicId:this.songs[i].songId} });
+        let song = res.data;
+        this.new_songs.push(song);
+      }
+      this.$store.dispatch("addAllSong", this.new_songs);
+      // 更新播放状态
+      this.$store.dispatch("changePlayState", true);
+			//提交vuex保存当前歌曲详情
+			this.$store.dispatch("saveSongDetail", this.new_songs[0]);
+      this.$store.dispatch("addPlayinglist",this.new_songs[0])
+      // console.log(this.songs[0]);
+		},
   }
 }
 </script>

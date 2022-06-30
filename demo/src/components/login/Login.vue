@@ -8,7 +8,7 @@
   </div>
   <!-- 已登录 -->
   <div class="avatar" @click="exit" v-else>
-    <img :src="userInfo.portrait" alt="">
+    <img :src="userInfo.portrait" alt="" >
     <span>{{userInfo.nickName}}</span>
   </div>
   <div class="form-login" v-show="isShowLogin">
@@ -59,6 +59,10 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
+  created(){
+    if(!this.userInfo)
+      this.userInfo = localStorage.getItem("userInfo");
+  },
   data(){
     return{
       circleUrl:"../assets/img/photo.jpg",
@@ -91,21 +95,23 @@ export default {
           window.sessionStorage.setItem("token", res.token);
           // 更新登录状态
 		    	this.$store.dispatch("updateLogin", true);
-
+          localStorage.setItem("isLogin",JSON.stringify(true));
           // this.setItem("isLogin",true);
           // 保存用户信息
           this.$store.dispatch("saveUserInfo", res.data);
+          localStorage.setItem("userInfo",JSON.stringify(res.data));
           // this.setItem("userInfo",res.data);
           this.$message.success("登录成功");
           this.isShowLogin = false;
           console.log(this.userInfo);
           this.getUserLikeSongs();
+          window.location.reload();
         }
     },
     // 获取用户的喜欢歌曲列表
     async getUserLikeSongs(){
 
-      const { data: res } = await this.$http.get("/like-music/getlikelist", {params:{userId:this.userInfo.id}});
+      const { data: res } = await this.$http.get("/like-music/getlikelist");
       // console.log(res.data);
       let likeSongIds=[];
       // console.log(res.data.length);
@@ -132,6 +138,7 @@ export default {
           message: '退出成功!'
         });
         window.sessionStorage.clear();
+        window.localStorage.clear();
         // 强制刷新页面
         location. reload()
       }).catch(() => {
@@ -211,6 +218,11 @@ export default {
   cursor: pointer;
   .goLogin{
     margin-left: 5px;
+  }
+  img{
+    height: 50px;
+    padding-right: 5px;
+    border-radius: 50%;
   }
 }
 .icon {

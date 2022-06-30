@@ -42,7 +42,8 @@ export default {
 		};
 	},
 	created() {
-
+    let pathArr = this.$route.path.split("/");
+		this.defaultActive = `/${pathArr[1]}/${pathArr[2]}/${this.$route.params.keywords}`;
 	},
 	watch: {
 		// 路由push相同地址不同参数时 不会自动刷新页面，这里通过watch监听路由变化，一但发生变化reload刷新
@@ -56,8 +57,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.top-nav{
+  margin-bottom: 10px;
+}
 .w {
-	margin: 0 auto;
+	margin-left :60px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .el-menu {
 	border: 0;

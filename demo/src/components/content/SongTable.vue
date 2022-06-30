@@ -33,7 +33,7 @@
 				<template v-slot="scope">
 					<div class="operation">
 						<span @click="likeSong(scope.row)" style="color:var(--themeColor)">
-              <span v-if="likeSongIds.indexOf(scope.row.songId) === -1" >
+              <span v-if="likeSongIds.indexOf(scope.row.songId) == -1" >
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-aixin"></use></svg>
               </span>
               <span v-else>
@@ -105,7 +105,7 @@ export default {
       console.log("???");
       this.getUserLikeSongs();
     }
-    // console.log(this.likeSongIds);
+    console.log(this.likeSongIds);
 
   },
   filters: {
@@ -149,7 +149,7 @@ export default {
       //提交vuex添加到播放列表
       this.$store.dispatch("addPlayinglist",song)
     },
-    // 添加喜欢或者不喜欢某歌曲(还未实现功能)
+    // 添加喜欢或者不喜欢某歌曲
     likeSong(song){
       // 先判断登录状态
 			if (!this.$store.state.isLogin) {
@@ -220,12 +220,22 @@ export default {
 			});
 		},
     // 获取用户的喜欢歌曲列表
-    async getUserLikeSongs(){
-      console.log(this.userInfo);
-      const { data: res } = await this.$http.get("/like-music/getlikelist", {params:{userId:this.userInfo.id}});
+   async getUserLikeSongs(){
+
+      const { data: res } = await this.$http.get("/like-music/getlikelist");
+      // console.log(res.data);
+      let likeSongIds=[];
+      // console.log(res.data.length);
+      if((res.data.length) !=0){
+        for(let i=0;i<res.data.length;i++)
+          likeSongIds.push(res.data[i].id);
+      }
+      // 喜欢的歌的id
+      this.$store.dispatch("saveLikeSongIds", likeSongIds);
+      // 喜欢的歌曲列表 用于我喜欢
       this.$store.dispatch("saveUserSongList", res.data);
-      // if(res.data.length !=0)
-      //   thi
+      // console.log("喜欢"+likeSongIds);
+
     },
   }
 }

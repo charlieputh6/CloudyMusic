@@ -17,7 +17,7 @@
         <!-- 头像 -->
         <div class="avator">
           <img :src="playlist.portrait" v-if="playlist.portrait">
-          <el-avatar :size="48" icon="el-icon-user-solid"></el-avatar>
+          <el-avatar :size="48" icon="el-icon-user-solid" v-else></el-avatar>
         </div>
         <!-- 名字 -->
         <div class="name"><span>{{playlist.nickName}}</span></div>
@@ -27,7 +27,7 @@
       </div>
       <!-- 相关操作 -->
       <div class="operation">
-        <el-button type="primary" icon="el-icon-video-play">播放全部</el-button>
+        <el-button type="primary" icon="el-icon-video-play" @click="playAll">播放全部</el-button>
         <el-button icon="el-icon-share">分享</el-button>
       </div>
       <!-- 歌曲数量 播放量-->
@@ -63,8 +63,10 @@ export default {
     // console.log("----------");
     // console.log(this.playlist);
   },
-  mounted(){
-
+  methods:{
+    playAll(){
+      this.$emit("playAllSong");
+    }
   }
 }
 </script>
