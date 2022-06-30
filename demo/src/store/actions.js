@@ -9,6 +9,11 @@ const actions = {
     commit("saveUserInfo", payload);
   },
 
+  /* 保存用户歌单 */
+  saveUserSongList({ commit }, payload) {
+    commit("saveUserSongList", payload);
+  },
+
   // 用户喜欢的音乐id列表
   saveLikeSongIds({ commit }, payload) {
     commit("saveLikeSongIds", payload);

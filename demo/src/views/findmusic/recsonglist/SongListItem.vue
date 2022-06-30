@@ -16,22 +16,22 @@
         <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-bofang"></use>
         </svg>
-        <span>{{songlistitem.time}}</span>
+        <span>{{songlistitem.playTime}}</span>
       </div>
       <!-- 图片上的歌单作者名字 -->
-      <div class="mask2">
+      <!-- <div class="mask2">
         <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-jurassic_user"></use>
         </svg>
         <span>{{songlistitem.user_id}}</span>
-      </div>
+      </div> -->
       <!-- 图片本身 -->
       <img :src="songlistitem.cover" alt="">
 
     </div>
     <!-- 歌单下的文字描述 -->
 		<div class="item-text">
-			<div>{{ songlistitem.introduction }}</div>
+			<div>{{ songlistitem.listName }}</div>
 		</div>
   </div>
 </template>
@@ -52,7 +52,11 @@ export default {
 		},
 	},
   methods:{
-    listItemClick(){},
+    // 根据点击的歌单id，跳转歌单详情页
+    listItemClick(){
+      this.$router.push("/songlistdetail/"+this.songlistitem.listId);
+      this.isShowPlay = false;
+    },
 
     showIcon() {
 			this.isShowPlay = true;

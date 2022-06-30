@@ -91,11 +91,34 @@ export default {
           window.sessionStorage.setItem("token", res.token);
           // 更新登录状态
 		    	this.$store.dispatch("updateLogin", true);
+
+          // this.setItem("isLogin",true);
           // 保存用户信息
           this.$store.dispatch("saveUserInfo", res.data);
+          // this.setItem("userInfo",res.data);
           this.$message.success("登录成功");
           this.isShowLogin = false;
+          console.log(this.userInfo);
+          this.getUserLikeSongs();
         }
+    },
+    // 获取用户的喜欢歌曲列表
+    async getUserLikeSongs(){
+
+      const { data: res } = await this.$http.get("/like-music/getlikelist", {params:{userId:this.userInfo.id}});
+      // console.log(res.data);
+      let likeSongIds=[];
+      // console.log(res.data.length);
+      if((res.data.length) !=0){
+        for(let i=0;i<res.data.length;i++)
+          likeSongIds.push(res.data[i].id);
+      }
+      // 喜欢的歌的id
+      this.$store.dispatch("saveLikeSongIds", likeSongIds);
+      // 喜欢的歌曲列表 用于我喜欢
+      this.$store.dispatch("saveUserSongList", res.data);
+      // console.log("喜欢"+likeSongIds);
+
     },
     // 退出登录
     exit(){

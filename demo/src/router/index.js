@@ -32,6 +32,13 @@ const Myfavorite = () => import("../views/myfavorite/MyFavorite.vue");
 /* 5 我喜欢的音乐 */
 const Mylove = () => import("../views/mylove/MyLove.vue");
 
+// 6 搜索详情页
+
+const Searchdetail = () => import("../views/searchdetail/Searchdetail.vue");
+const SongRes = () => import("../views/searchdetail/Childcomps/SongRes.vue");
+const AlbumRes = () => import("../views/searchdetail/Childcomps/AlbumRes.vue");
+const SingerRes = () => import("../views/searchdetail/Childcomps/SingerRes.vue");
+
 export default new Router({
   mode: "hash",
   routes: [
@@ -97,6 +104,29 @@ export default new Router({
       path: "/songlistdetail/:id",
       name: "Songlistdetail",
       component: Songlistdetail,
+    },
+    /* 搜索详情*/
+    {
+      path: "/searchdetail/:keywords",
+      component: Searchdetail,
+      redirect: "/searchdetail/songres/:keywords",
+      children: [
+        {
+          path: "/searchdetail/songres/:keywords",
+          name: "SongRes",
+          component: SongRes,
+        },
+        {
+          path: "/searchdetail/albumres/:keywords",
+          name: "AlbumRes",
+          component: AlbumRes,
+        },
+        {
+          path: "/searchdetail/singerres/:keywords",
+          name: "SingerRes",
+          component: SingerRes,
+        },
+      ],
     },
   ]
 })

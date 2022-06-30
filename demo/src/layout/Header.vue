@@ -13,22 +13,9 @@
     </div>
     <!-- 搜索框 -->
     <div>
-      <el-autocomplete
-        popper-class="my-autocomplete"
-        v-model="state"
-        :fetch-suggestions="querySearch"
-        placeholder="请输入内容"
-        @select="handleSelect">
-        <i
-          class="el-icon-edit el-input__icon"
-          slot="suffix"
-          @click="handleIconClick">
-        </i>
-        <template slot-scope="{ item }">
-          <div class="name">{{ item.value }}</div>
-          <span class="addr">{{ item.address }}</span>
-        </template>
-      </el-autocomplete>
+      <el-input placeholder="请输入内容" size="big" v-model.trim="searchWord"  @keyup.enter.native="search">
+			<span slot="suffix" class="el-icon-search" @click="search"></span>
+		</el-input>
     </div>
 
   </div>
@@ -57,7 +44,7 @@ export default {
     name: "Header",
     data(){
       return {
-        state:"搜索",
+        searchWord:""
       }
     },
     components: { Login, ThemePicker },
@@ -68,13 +55,19 @@ export default {
       goForward(){
 
       },
-      handleSelect(){
-
-      },
-      handleIconClick(){
-
-      },
-      querySearch(){}
+      search(){
+        if (this.searchWord == "") {
+          this.$message({
+            showClose: true,
+            message: "请输入内容",
+            type: "warning",
+            center: true,
+          });
+        } else {
+          console.log("搜索");
+          this.$router.push("/searchdetail/" + this.searchWord).catch(err => err);
+        }
+      }
     }
 }
 </script>

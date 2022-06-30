@@ -15,7 +15,15 @@ export default {
   },
   created(){
     // 请求榜单数据
+    this.getToplist();
 
+  },
+  methods:{
+    // 请求榜单数据
+    async getToplist(){
+      const { data: res } = await this.$http.get("/list/gettoplist");
+      this.rankfeature = res.data;
+    }
   }
 }
 </script>

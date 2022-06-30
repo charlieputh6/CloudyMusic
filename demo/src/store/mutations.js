@@ -7,7 +7,10 @@ const mutations = {
   saveUserInfo(state, payload) {
     state.userInfo = payload;
   },
-
+  /* 保存用户歌单 */
+  saveUserSongList(state, payload) {
+    state.userSongList = payload;
+  },
   // 用户喜欢的音乐id列表
   saveLikeSongIds(state, payload) {
     state.likeSongIds = payload;

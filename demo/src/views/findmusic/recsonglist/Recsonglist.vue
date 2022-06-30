@@ -36,27 +36,14 @@ export default {
         song:{}
       }
     },
-    mounted(){
-      this.song =  {
-        id:1,
-        name:"歌单名",
-        user_id:2,
-        create_time:"2022-6-27",
-        music_count:66,
-        introduction:"这是介绍",
-        cover:require("../../../assets/img/wyy.png"),
-        time:666
+    created(){
+      this.getRecommendList();
+    },
+    methods:{
+      async getRecommendList(){
+        const { data: res } = await this.$http.get("/list/getrecommendlist");
+        this.songlist = res.data
       }
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song),
-      this.songlist.push(this.song)
     },
     components: { SongList }
 }

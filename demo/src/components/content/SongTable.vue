@@ -8,10 +8,12 @@
       @row-dblclick="playSongClick"
       >
       <el-table-column width="50">
+
         <!-- 放置小喇叭还是序号 -->
             <template v-slot="scope">
             <!-- 是正在播放还是静音 -->
             <!-- 当前歌曲是小喇叭 -->
+            <!-- <span>{{scope.row.songId}}---</span> -->
               <div v-if="scope.row.songId === nowSongDetail.id" style="color:var(--themeColor);font-size:28px">
 
                   <span v-if="isPlaying">
@@ -30,8 +32,8 @@
 			<el-table-column width="120">
 				<template v-slot="scope">
 					<div class="operation">
-						<span @click="likeSong(scope.row)">
-              <span v-if="likeSongIds.indexOf(scope.row.id) === -1">
+						<span @click="likeSong(scope.row)" style="color:var(--themeColor)">
+              <span v-if="likeSongIds.indexOf(scope.row.songId) === -1" >
                 <svg class="icon" aria-hidden="true"><use xlink:href="#icon-aixin"></use></svg>
               </span>
               <span v-else>
@@ -95,6 +97,17 @@ export default {
   computed: {
 		...mapGetters(["isPlaying", "nowSongDetail", "isLogin", "userInfo", "userSongList", "likeSongIds"]),
 	},
+  created(){
+
+    // 获取用户的喜欢歌曲列表
+    // 如果没有用户的喜欢列表  才去获取
+    if(this.isLogin && this.likeSongIds.length===0){
+      console.log("???");
+      this.getUserLikeSongs();
+    }
+    // console.log(this.likeSongIds);
+
+  },
   filters: {
 		formatIndex(index) {
       index++;
@@ -138,7 +151,59 @@ export default {
     },
     // 添加喜欢或者不喜欢某歌曲(还未实现功能)
     likeSong(song){
-      console.log("添加喜欢还未实现这个功能");
+      // 先判断登录状态
+			if (!this.$store.state.isLogin) {
+				this.$message({
+					type: "warning",
+					message: "登录后才能收藏",
+					showClose: true,
+					center: true,
+				});
+				return;
+			}
+			// 判断传入参数是喜欢还是不喜欢
+			let like = this.likeSongIds.indexOf(song.songId) !== -1 ? false : true;
+			// 如果是在用户喜欢的歌单点击的取消喜欢---
+
+			// 否则不在用户喜欢的歌单 直接调接口
+
+			this.likeNowSongBy(song, like);
+      // console.log(song);
+      // console.log(this.userInfo);
+      console.log("喜欢"+this.likeSongIds);
+
+    },
+    async likeNowSongBy(song,like){
+      console.log("是否添加"+like);
+      if (like === true) {
+        this.likeSongIds.push(song.songId);
+        const { data: res } = await this.$http.get("/like-music/addlikemusic", {params:{musicId: song.songId}});
+        if(res.code==200){
+          this.$message({
+            message: "已添加到我喜欢的音乐",
+            type: "success",
+            center: true,
+          });
+          this.islike = true;
+        }else{
+          this.$message.warning("添加操作失败,请重试");
+        }
+
+      } else {
+        this.likeSongIds.pop(song.songId);
+        const { data: res } = await this.$http.get("/like-music/deletelikemusic", {params:{musicId: song.songId}});
+        if(res.code == 200){
+          this.$message({
+            message: "取消喜欢成功",
+            type: "success",
+            center: true,
+          });
+          this.islike = false;
+        }else{
+          this.$message.warning("取消操作失败,请重试");
+        }
+
+      }
     },
     // 下载歌曲
     downloadCurrentMusic(song) {
@@ -154,6 +219,14 @@ export default {
 				center: true,
 			});
 		},
+    // 获取用户的喜欢歌曲列表
+    async getUserLikeSongs(){
+      console.log(this.userInfo);
+      const { data: res } = await this.$http.get("/like-music/getlikelist", {params:{userId:this.userInfo.id}});
+      this.$store.dispatch("saveUserSongList", res.data);
+      // if(res.data.length !=0)
+      //   thi
+    },
   }
 }
 </script>
