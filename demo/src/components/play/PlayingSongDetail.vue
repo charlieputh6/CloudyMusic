@@ -11,22 +11,22 @@
          <!-- 左边旋转唱片 -->
         <div class="left-cover">
           <!-- 唱片旋转 -->
-            <!-- <div class="record record-rotate" :class="{ startRotate: isPlaying }" @click="isPlaying ? pausePlay() : startPlay()">
-              <img class="cp2" src="../../assets/img/cp2.png" alt="" />
-              <img class="cover" :src="cover" alt="" />
-            </div> -->
-            <div class="record">
+            <div class="record record-rotate" :class="{ startRotate: isPlaying }" @click="isPlaying ? pausePlay() : startPlay()">
               <img class="cp2" src="../../assets/img/cp2.png" alt="" />
               <img class="cover" :src="cover" alt="" />
             </div>
+            <!-- <div class="record">
+              <img class="cp2" src="../../assets/img/cp2.png" alt="" />
+              <img class="cover" :src="cover" alt="" />
+            </div> -->
 
         </div>
         <!-- 右边歌词 -->
         <div class="right-lyrics">
           <div class="hd">
             <h2>{{nowSongDetail.name}}</h2>
-            <div>专辑：<span>{{nowSongDetail.album_id}}</span></div>
-            <div>歌手：<span>{{nowSongDetail.singer_id}}</span></div>
+            <div>专辑：<span>{{nowSongDetail.album}}</span></div>
+            <div>歌手：<span>{{nowSongDetail.singerVos[0].name}}</span></div>
           </div>
           <div class="bd" id="scrollLyric"  ref="scrollLyric">
             <ul v-if="formatlyric.length !==0">
@@ -81,9 +81,12 @@ export default {
     }
   },
   created(){
+    // location.reload();
+    // console.log("created");
     this.toformatlyric();
   },
   mounted(){
+    // this.toformatlyric();
     // console.log(this.formatlyric);
     //监听播放时间
     let musicDom = document.querySelector('#audio');//获取Audio的DOM节点
@@ -119,7 +122,7 @@ export default {
     toformatlyric(){
       this.formatlyric = [];
       // 根据换行符分割成一行一行句一句歌词
-      let lyric_arr = this.nowSongDetail.text.split("\n");
+      let lyric_arr = this.nowSongDetail.lyrics.split("\n");
       for(let i = 0; i < lyric_arr.length; i++){
         // 每一行歌词
         let lyric_row = lyric_arr[i];

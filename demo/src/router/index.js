@@ -16,6 +16,9 @@ const Singer = () => import("../views/findmusic/singer/Singer.vue");
 // 1.5 最新音乐
 const Newsongs = () => import("../views/findmusic/newsongs/Newsongs.vue");
 
+// 1.6 歌单详情
+const Songlistdetail = () => import("../views/songlistdetail/Songlistdetail.vue");
+
 /* 2 推荐视频 */
 const Recvideo = () => import("../views/recvideo/RecVideo.vue");
 
@@ -88,6 +91,12 @@ export default new Router({
       path: "/mylove",
       component: Mylove,
       name: "Mylove",
+    },
+    // 歌单详情
+    {
+      path: "/songlistdetail/:id",
+      name: "Songlistdetail",
+      component: Songlistdetail,
     },
   ]
 })

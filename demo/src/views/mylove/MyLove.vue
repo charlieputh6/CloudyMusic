@@ -1,5 +1,5 @@
 <template>
-  <div id="song-list-detail">
+  <div id="mylove">
     <!-- 歌单描述 -->
     <Topdesc></Topdesc>
     <!-- 底部歌单 -->

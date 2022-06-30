@@ -8,34 +8,34 @@
 			</el-menu-item>
 
       <el-divider></el-divider>
-			<div class="mycreat" v-if="true">
+			<div class="mycreat" v-show="createdSongList.length >=1">
 				<h2>我创建的歌单</h2>
-				<span>
-          <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-aixin"></use>
+        <!-- 循环用户歌单列表 -->
+        <el-menu-item v-for="item in createdSongList" :key="item.id" :index="'/songlistdetail/' + item.id">
+          <span>
+            <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-aixin"></use>
           </svg>
-        </span>
-				<span @click="myFavorite">我喜欢的音乐</span>
+          </span>
+          <span>{{item.name}}</span>
+        </el-menu-item>
+
 			</div>
-			<!-- <div class="collect" v-if="userSongList.length > 1">
-				<p class="by">我收藏的歌单</p>
-				<div class="person">
-					<el-menu-item v-for="item in collectSongList" :key="item.id" :index="'/songlistdetail/' + item.id">
-						<span class="iconfont icon-gedan"></span>
-						<span>{{ item.name }}</span>
-					</el-menu-item>
-				</div>
-			</div> -->
 		</el-menu>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name:'Side',
+  computed: {
+		...mapGetters(["userSongList", "userInfo"]),
+  },
   data() {
 		return {
 			defaultActive: "/findmusic",
+      createdSongList:"",
 			subnavitem: [
 				{ name: "发现音乐", path: "/findmusic", icon: require("../assets/img/findMusic.png") },
 				{ name: "推荐视频", path: "/recvideo", icon: require("../assets/img/video.png") },
@@ -45,9 +45,20 @@ export default {
 			collectIndex: null,
 		};
 	},
+  created(){
+    this.getlist();
+  },
+  mounted(){
+    this.getlist();
+  },
   methods:{
     myFavorite(){
       this.$router.push("/mylove");
+    },
+    async getlist(){
+      const { data: res } = await this.$http.get("/list/getlist");
+      // console.log(res);
+      this.createdSongList = res.data;
     }
   }
 }
@@ -80,9 +91,10 @@ export default {
 	}
 	}
   .mycreat{
-    padding: 0 20px;
+
 
     h2{
+      padding: 0 20px;
       padding-bottom: 20px;
       font-size: 16px;
     }

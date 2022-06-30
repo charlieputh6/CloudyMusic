@@ -51,25 +51,25 @@
           </el-table-column>
           <!-- 到时候可以发请求通过歌手id查找歌手姓名 -->
           <el-table-column el-table-column
-          prop=""
-          label="歌手姓名"
-          :show-overflow-tooltip="true"
-          width="100">
-          <template v-slot="scope">
-            <span @click="toSinger(scope.row.id)" >charlieputh</span>
-          </template>
+            prop="singerVos[0].name"
+            label="歌手姓名"
+            :show-overflow-tooltip="true"
+            width="100">
+            <!-- <template v-slot="scope">
+              <span @click="toSinger(scope.row.id)" >charlieputh</span>
+            </template> -->
           </el-table-column>
 
           <el-table-column el-table-column
-          prop="play_time"
+          prop="playTime"
           label="歌曲时长"
           :show-overflow-tooltip="true"
           width="100">
-          <template v-slot="scope">
+          <!-- <template v-slot="scope">
                 <span>
                   {{ scope.row.play_time | formatDuration }}
                 </span>
-              </template>
+              </template> -->
           </el-table-column>
 
           <el-table-column width="60">
@@ -135,25 +135,25 @@
           </el-table-column>
           <!-- 到时候可以发请求通过歌手id查找歌手姓名 -->
           <el-table-column el-table-column
-          prop=""
+          prop="singerVos[0].name"
           label="歌手姓名"
           :show-overflow-tooltip="true"
           width="100">
-          <template v-slot="scope">
+          <!-- <template v-slot="scope">
             <span @click="toSinger(scope.row.id)" >charlieputh</span>
-          </template>
+          </template> -->
           </el-table-column>
 
           <el-table-column el-table-column
-          prop="play_time"
+          prop="playTime"
           label="歌曲时长"
           :show-overflow-tooltip="true"
           width="100">
-          <template v-slot="scope">
+          <!-- <template v-slot="scope">
                 <span>
                   {{ scope.row.play_time | formatDuration }}
                 </span>
-              </template>
+              </template> -->
           </el-table-column>
 
           <el-table-column width="60">
@@ -252,7 +252,6 @@ export default {
 		let playingList = document.querySelector("#playing-song-list");
 		let footer = document.querySelector("#footer");
 		document.addEventListener("mousedown", e => {
-      console.log(e);
 			if (playingList) {
 				if (!playingList.contains(e.target) && !footer.contains(e.target)) {
 					this.$emit("closePlayList");

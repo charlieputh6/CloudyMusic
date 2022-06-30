@@ -10,7 +10,7 @@
         </div>
         <div class="songname">
           <p style="padding-bottom: 5px">{{nowSongDetail.name}}</p>
-          <p class="by">charlie</p>
+          <p class="by">{{nowSongDetail.singerVos[0].name}}</p>
         </div>
       </div>
     </div>
@@ -278,9 +278,9 @@ export default {
 
   },
   mounted() {
-      this.updateSongs();
+      // this.updateSongs();
       // 死数据先在这里将播放列表全部加入playingList里面
-      this.$store.dispatch("addAllSong", this.playingLists);
+      // this.$store.dispatch("addAllSong", this.playingLists);
       // 保存歌曲URL
       this.$store.dispatch("saveSongUrl",this.nowSongDetail.src)
       // 保存当前正在播放歌曲的详细信息
@@ -327,7 +327,7 @@ export default {
             else if (this.playModel === 3) {
                 this.loopPlay();
             }
-            console.log(this.nowIndex);
+            // console.log(this.nowIndex);
         }
     },
     // 播放

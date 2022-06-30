@@ -38,7 +38,16 @@ const mutations = {
     localStorage.setItem("nowSongDetail", JSON.stringify(state.nowSongDetail));
     // 添加当前播放歌曲到播放历史记录
     let index = state.historyPlay.findIndex(item => {
-      return item.id == payload.id;
+
+      // return item.id == payload.id;
+      if (item.id === payload.id) {
+        // 再添加到第一个位置
+        state.historyPlay.unshift(payload);
+        // 删除它
+        state.historyPlay.splice(item.index, 1);
+
+        return true;
+      }
     });
     //如果列表不存在相同的歌曲 再添加到播放历史列表
     if (index == -1) {
